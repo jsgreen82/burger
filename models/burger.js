@@ -1,33 +1,22 @@
+// Import ORM
 var orm = require("../config/orm.js");
 
-var tableName = "burgers";
 var burger = {
-
-    getBurgers: function(callback) {
-        var burger = "SELECT * FROM" + tableName;
-
-        connection.query(burger, function(err, result) {
-
-            callback(result);
+    all: function (cb) {
+        orm.all("burgers", function (res) {
+            cb(res);
         });
     },
-
-    deleteBurger: function(id, callback) {
-        var s = "DELETE FROM " + tableName + " WHERE id=?";
-        connection.query(s, [id], function(err, result) {
-          callback(result);
+    create: function (cols, vals, cb) {
+        orm.create("burgers", cols, vals, function(res) {
+            cb(res);
         });
-      },
-
-      addBurger: function(burger, callback) {
-        var burger = "INSERT INTO " + tableName + " (text, complete) VALUES (?,?)";
-        burger.devour = burger.devour || 0;
-        connection.query(s, [
-          burger.name, burger.devour
-        ], function(err, result) {
-          callback(result);
+    },
+    update: function(objColVals, condition, cb) {
+        orm.update("burgers", objColVals, condition, function(res) {
+            cb(res);
         });
-      }
+    }
 };
 
 module.exports = burger;
